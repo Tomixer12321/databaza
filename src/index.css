@@ -15,8 +15,22 @@ body{
 .one-movie{
     font-size: 20px;
     border: 2px solid #e50914;
-    width: 400px;
+    width: 500px;
     padding: 5px 10px;
     margin-bottom: 10px;
     text-align: left;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.one-movie button{
+    margin-right: 10px;
+    font-size: 16px;
+    background-color: #e50914;
+    color: #e5e5e5;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
 }
