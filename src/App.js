@@ -22,13 +22,13 @@ const App = () => {
     })
   }, [])
 
-  return <div>
+  return <div className="all-movies">
     {error && <p>{error}</p>}
     {data.map((oneMovie)=>{
 
       const {id,title,minage,time}=oneMovie
 
-      return <div key={id}>
+      return <div key={id} className="one-movie">
         <p>{title}, {time}min, {minage}+</p>
       </div>
     })}
