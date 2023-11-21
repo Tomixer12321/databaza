@@ -6,20 +6,21 @@ const App = () => {
   const [error, setError] = useState(false)
   
   useEffect( () => {
-    projectFirestore.collection("movies").get().then((snapshot)=>{
+    const unsubscribe=projectFirestore.collection("movies").onSnapshot((snapshot)=>{
 
       if(snapshot.empty){
         setError("zadne filmy k vypisani")
+        setData([])
       }else{
         let result=[]
         snapshot.docs.forEach((oneMovie)=>{
           result.push({id: oneMovie.id, ...oneMovie.data()})
         })
         setData(result)
+        setError("")
       }
-    } ).catch((err)=>{
-      setError(err.message)
-    })
+    },(err)=>{setError(err.message)})
+    return ()=>{unsubscribe()}
   }, [])
 
   const deleteMovie=(id)=>{
