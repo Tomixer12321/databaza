@@ -44,10 +44,10 @@ const App = () => {
   }
 
   return <div className="all-movies">
-    <form onSubmit={formSubmit}>
-      <input type="text" onChange={(e)=>setMovieTitle(e.target.value)} placeholder="title" value={movieTitle}/><br />
-      <input type="number" onChange={(e)=>setMovieAge(e.target.value)} placeholder="min age" min="0" value={movieAge}/><br />
-      <input type="number" onChange={(e)=>setMovieTime(e.target.value)} placeholder="time" min="0" value={movieTime}/><br />
+    <form onSubmit={formSubmit} className="form">
+      <input type="text" onChange={(e)=>setMovieTitle(e.target.value)} placeholder="title" value={movieTitle} className="input"/>
+      <input type="number" onChange={(e)=>setMovieAge(e.target.value)} placeholder="min age" min="0" value={movieAge} className="input"/>
+      <input type="number" onChange={(e)=>setMovieTime(e.target.value)} placeholder="time" min="0" value={movieTime} className="input"/>
       <input type="submit" />
     </form>
     {error && <p>{error}</p>}
