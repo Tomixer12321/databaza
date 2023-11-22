@@ -4,9 +4,9 @@ import { useState, useEffect } from "react"
 const App = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState(false)
-  const [movieTtitle,setMovieTitle]=useState("")
+  const [movieTitle,setMovieTitle]=useState("")
   const [movieAge,setMovieAge]=useState(null)
-  const [moviesTime,setMovieTime]=useState(null)
+  const [movieTime,setMovieTime]=useState(null)
   
   useEffect( () => {
     const unsubscribe=projectFirestore.collection("movies").onSnapshot((snapshot)=>{
@@ -30,19 +30,24 @@ const App = () => {
     projectFirestore.collection("movies").doc(id).delete()
   }
 
-  const formSubmit=(e)=>{
+  const formSubmit=async(e)=>{
     e.preventDefault()
-
-    console.log(movieAge)
-    console.log(moviesTime)
-    console.log(movieTtitle)
+    const newMovie={title:movieTitle, minage:movieAge, time:movieTime}
+    try{
+      await projectFirestore.collection("movies").add(newMovie)
+      setMovieTitle("")
+      setMovieAge("")
+      setMovieTime("")
+    }catch(err){
+      setError("film nebol pridany " + err.message)
+    }
   }
 
   return <div className="all-movies">
     <form onSubmit={formSubmit}>
-      <input type="text" onChange={(e)=>setMovieTitle(e.target.value)} placeholder="title"/><br />
-      <input type="number" onChange={(e)=>setMovieAge(e.target.value)} placeholder="min age" min="0"/><br />
-      <input type="number" onChange={(e)=>setMovieTime(e.target.value)} placeholder="time" min="0"/><br />
+      <input type="text" onChange={(e)=>setMovieTitle(e.target.value)} placeholder="title" value={movieTitle}/><br />
+      <input type="number" onChange={(e)=>setMovieAge(e.target.value)} placeholder="min age" min="0" value={movieAge}/><br />
+      <input type="number" onChange={(e)=>setMovieTime(e.target.value)} placeholder="time" min="0" value={movieTime}/><br />
       <input type="submit" />
     </form>
     {error && <p>{error}</p>}
