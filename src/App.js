@@ -4,6 +4,9 @@ import { useState, useEffect } from "react"
 const App = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState(false)
+  const [movieTtitle,setMovieTitle]=useState("")
+  const [movieAge,setMovieAge]=useState(null)
+  const [moviesTime,setMovieTime]=useState(null)
   
   useEffect( () => {
     const unsubscribe=projectFirestore.collection("movies").onSnapshot((snapshot)=>{
@@ -27,7 +30,21 @@ const App = () => {
     projectFirestore.collection("movies").doc(id).delete()
   }
 
+  const formSubmit=(e)=>{
+    e.preventDefault()
+
+    console.log(movieAge)
+    console.log(moviesTime)
+    console.log(movieTtitle)
+  }
+
   return <div className="all-movies">
+    <form onSubmit={formSubmit}>
+      <input type="text" onChange={(e)=>setMovieTitle(e.target.value)} placeholder="title"/><br />
+      <input type="number" onChange={(e)=>setMovieAge(e.target.value)} placeholder="min age" min="0"/><br />
+      <input type="number" onChange={(e)=>setMovieTime(e.target.value)} placeholder="time" min="0"/><br />
+      <input type="submit" />
+    </form>
     {error && <p>{error}</p>}
     {data.map((oneMovie)=>{
 
